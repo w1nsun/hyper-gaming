@@ -1,0 +1,28 @@
+services:
+# Use postgres/example user/password credentials
+  db:
+    image: postgres
+    restart: on-failure
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: hgaming
+    ports:
+      - 5434:5432
+    volumes:
+      - hgaming-postgres-data:/var/lib/postgresql/data
+    networks:
+      - mynet
+
+  adminer:
+    image: adminer
+    restart: on-failure
+    ports:
+      - 8085:8080
+    networks:
+      - mynet
+
+volumes:
+  hgaming-postgres-data:
+
+networks:
+  mynet:
