@@ -1,6 +1,6 @@
 package com.hyper.gaming.game.domain.enums;
 
-public enum GameType {
+public enum EGameType {
   SLOT,
   ROULETTE
 }
