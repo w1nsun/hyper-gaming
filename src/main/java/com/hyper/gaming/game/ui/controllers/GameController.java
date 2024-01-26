@@ -2,6 +2,7 @@ package com.hyper.gaming.game.ui.controllers;
 
 import com.hyper.gaming.game.app.services.GameService;
 import com.hyper.gaming.game.app.usecases.game.CreateGameCommand;
+import com.hyper.gaming.game.app.usecases.game.RemoveGameCommand;
 import com.hyper.gaming.game.app.usecases.game.UpdateGameCommand;
 import com.hyper.gaming.game.domain.models.Game;
 import jakarta.validation.Valid;
@@ -47,5 +48,19 @@ public class GameController {
 
     return ResponseEntity.status(HttpStatus.OK)
         .body(game);
+  }
+
+  @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "{id}")
+  public ResponseEntity<String> remove(
+      @PathVariable
+      @NotNull
+      @UUID
+      String id
+  ) {
+    RemoveGameCommand command = new RemoveGameCommand();
+    command.id = java.util.UUID.fromString(id);
+    this.gameService.remove(command);
+
+    return ResponseEntity.status(HttpStatus.NO_CONTENT).body("OK");
   }
 }

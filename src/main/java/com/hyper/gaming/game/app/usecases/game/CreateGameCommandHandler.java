@@ -6,6 +6,7 @@ import com.hyper.gaming.game.domain.models.Game;
 import com.hyper.gaming.game.domain.repositories.GameRepository;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Component
@@ -22,6 +23,10 @@ public class CreateGameCommandHandler implements ICommandHandler<CreateGameComma
     game
         .setName(command.name)
         .setType(EGameType.valueOf(command.type));
+
+    for (BigDecimal betAmount: command.bets) {
+      game.addBet(betAmount);
+    }
 
     return this.gameRepo.save(game);
   }

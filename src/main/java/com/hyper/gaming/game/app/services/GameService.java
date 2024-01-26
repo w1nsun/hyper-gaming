@@ -1,9 +1,6 @@
 package com.hyper.gaming.game.app.services;
 
-import com.hyper.gaming.game.app.usecases.game.CreateGameCommand;
-import com.hyper.gaming.game.app.usecases.game.CreateGameCommandHandler;
-import com.hyper.gaming.game.app.usecases.game.UpdateGameCommand;
-import com.hyper.gaming.game.app.usecases.game.UpdateGameCommandHandler;
+import com.hyper.gaming.game.app.usecases.game.*;
 import com.hyper.gaming.game.domain.models.Game;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +8,16 @@ import org.springframework.stereotype.Service;
 public class GameService {
   private final CreateGameCommandHandler createGameCommandHandler;
   private final UpdateGameCommandHandler updateGameCommandHandler;
+  private final RemoveGameCommandHandler removeGameCommandHandler;
 
-  public GameService(CreateGameCommandHandler createGameCommandHandler, UpdateGameCommandHandler updateGameCommandHandler) {
+  public GameService(
+      CreateGameCommandHandler createGameCommandHandler,
+      UpdateGameCommandHandler updateGameCommandHandler,
+      RemoveGameCommandHandler removeGameCommandHandler
+  ) {
     this.createGameCommandHandler = createGameCommandHandler;
     this.updateGameCommandHandler = updateGameCommandHandler;
+    this.removeGameCommandHandler = removeGameCommandHandler;
   }
 
   public Game create(CreateGameCommand command) {
@@ -23,5 +26,9 @@ public class GameService {
 
   public Game update(UpdateGameCommand command) {
     return this.updateGameCommandHandler.execute(command);
+  }
+
+  public void remove(RemoveGameCommand command) {
+    this.removeGameCommandHandler.execute(command);
   }
 }
