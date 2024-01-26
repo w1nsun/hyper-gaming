@@ -1,6 +1,7 @@
 package com.hyper.gaming.game.app.usecases.game;
 
 import com.hyper.gaming.core.usecases.ICommandHandler;
+import com.hyper.gaming.game.domain.enums.EGameStatus;
 import com.hyper.gaming.game.domain.enums.EGameType;
 import com.hyper.gaming.game.domain.models.Game;
 import com.hyper.gaming.game.domain.repositories.GameRepository;
@@ -22,7 +23,8 @@ public class CreateGameCommandHandler implements ICommandHandler<CreateGameComma
     Game game = new Game(UUID.randomUUID());
     game
         .setName(command.name)
-        .setType(EGameType.valueOf(command.type));
+        .setType(EGameType.valueOf(command.type))
+        .setStatus(command.status != null ? EGameStatus.valueOf(command.status) : EGameStatus.ACTIVE);
 
     for (BigDecimal betAmount: command.bets) {
       game.addBet(betAmount);
